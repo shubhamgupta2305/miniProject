@@ -49,6 +49,23 @@ public class Controller {
 			
 			// All ships are sunk - game is over
 			mainWindow.gameOver();
+
+			//display the total score based on the number of guessing and message
+			if (guesses < 25) {
+				mainWindow.displayTotalScore(200);
+				String messageToPlayer = "Amazing, that is the epic Sea Battle, Commander!";
+				mainWindow.displayMessage(messageToPlayer);
+			}
+			else if (guesses < 35){
+				mainWindow.displayTotalScore(100);
+				String messageToPlayer = "Wow, that is the great battle, Commander!";
+				mainWindow.displayMessage(messageToPlayer);
+			}
+			else {
+				mainWindow.displayTotalScore(50);
+				String messageToPlayer = "Be prepared for the next combat, Commander!";
+				mainWindow.displayMessage(messageToPlayer);
+			}
 		}
 	}
 	

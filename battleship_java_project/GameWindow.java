@@ -1,31 +1,11 @@
 
 
-import javax.swing.JFrame;
-import javax.swing.JTable;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-
-import javax.swing.BoxLayout;
-import java.awt.FlowLayout;
-
-import java.awt.Insets;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.Toolkit;
-import java.awt.Component;
-import java.awt.event.KeyEvent;
-
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.SwingConstants;
-import javax.swing.JSeparator;
+import javax.swing.table.TableModel;
+import java.awt.*;
+import java.awt.event.KeyEvent;
 
 /*
  * The main GUI for the battleship game.
@@ -40,7 +20,10 @@ public class GameWindow {
 	private JLabel messageText;
 	private JTextField inputText;
 	private JButton fireButton;
-	
+
+	private JLabel totalScoreLabel;
+	private  JTextField scoreOutputText;
+
 	private JTable table;
 	private GameTableModel tmodel;
 	
@@ -92,7 +75,6 @@ public class GameWindow {
 		messageText.setFont(new Font("Dialog", Font.PLAIN, 16));
 		
 		// Table panel
-		
 		JPanel tablePanel = new JPanel();
 		tablePanel.setBackground(getColor());
 		
@@ -114,9 +96,18 @@ public class GameWindow {
 		columnNumberPanel.add(new JSeparator());
 		columnNumberPanel.add(columnNumberTable());
 
+		// Added a new feature display total score
+		totalScoreLabel = new JLabel("Total Score:");
+		scoreOutputText = new JTextField("", 5);
+		scoreOutputText.setMargin(new Insets(6, 5, 2, 10));
+
+		JPanel displayScore = new JPanel();
+		displayScore.setBackground(getColor());
+		displayScore.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		displayScore.add(totalScoreLabel);
+		displayScore.add(scoreOutputText); // End of display total score code
 		
 		// Input panel
-		
 		inputText = new JTextField("", 5);
 		inputText.setMargin(new Insets(2, 2, 2, 2));
 		inputText.setFont(new Font("Dialog", Font.PLAIN, 16));
@@ -135,7 +126,8 @@ public class GameWindow {
 		JPanel mainPanel = new JPanel();
 		mainPanel.setBackground(getColor());
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-		mainPanel.add(messagePanel);	
+		mainPanel.add(messagePanel);
+		mainPanel.add(displayScore);
 		mainPanel.add(tablePanel);
 		mainPanel.add(columnNumberPanel);
 		mainPanel.add(inputPanel);
@@ -184,6 +176,13 @@ public class GameWindow {
 		tmodel = new GameTableModel();
 		table.setModel(tmodel);
 		table.updateUI();
+	}
+
+	/*
+	 *  Display total score
+	 */
+	public void displayTotalScore(int score) {
+		scoreOutputText.setText(String.valueOf(score));
 	}
 	
 	/*
